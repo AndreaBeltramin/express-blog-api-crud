@@ -1,16 +1,19 @@
 const posts = require("../data/blogPosts");
 
 //index
-//restituisce un oggetto json con la lista dei post
-//e il conteggio partendo da un array
 function index(req, res) {
-	res.json([blogPosts, "il numero di post è: " + blogPosts.length]);
+	//diamo in risposta la lista dei post come oggetto json
+	res.json(posts);
 }
 
 //show
 function show(req, res) {
-	const id = req.params.id;
-	res.json(`Mostra il post con id n. ${id}`);
+	//recuperiamo l'id dall'URL e lo trasformiamo in un numero
+	const id = parseInt(req.params.id);
+	//cerchiamo il post con quell'id nella lista dei post
+	const post = posts.find((post) => post.id === id);
+	//diamo in risposta il post trovato
+	res.json(post);
 }
 
 //store
@@ -32,8 +35,16 @@ function modify(req, res) {
 
 //destroy
 function destroy(req, res) {
-	const id = req.params.id;
-	res.json(`Elimina il post con id n. ${id}`);
+	//recuperiamo l'id dall'URL e lo trasformiamo in un numero
+	const id = parseInt(req.params.id);
+	//cerchiamo il post con quell'id nella lista dei post
+	const post = posts.find((post) => post.id === id);
+	//rimuoviamo il post con quell'id dalla lista dei post
+	posts.splice(posts.indexOf(post), 1);
+	//stampiamo in console la lista dei post aggiornata
+	console.log(posts);
+	//diamo una risposta con stato 204 e nessun contenuto
+	res.sendStatus(204);
 }
 
 module.exports = { index, show, store, update, modify, destroy };
