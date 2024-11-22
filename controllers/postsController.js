@@ -1,6 +1,7 @@
+//importo la lista dei post
 const posts = require("../data/posts");
 
-//index
+//index => mostra la lista intera dei post
 function index(req, res) {
 	//dichiariamo la lista dei post filtrata = alla lista dei post originale
 	let filteredPosts = posts;
@@ -14,7 +15,7 @@ function index(req, res) {
 	res.json(filteredPosts);
 }
 
-//show
+//show => mostra un singolo post
 function show(req, res) {
 	//recuperiamo l'id dall'URL e lo trasformiamo in un numero
 	const id = parseInt(req.params.id);
@@ -33,24 +34,82 @@ function show(req, res) {
 	res.json(post);
 }
 
-//store
+//store => creazione di un nuovo post
 function store(req, res) {
-	res.json("Crea un nuovo post");
+	const { title, content, img, tags } = req.body;
+	//creo un nuovo id
+	const id = posts[posts.length - 1].id + 1;
+	//controllo i parametri in entrata dal body
+	if (!title || !content || !img || !tags?.length) {
+		return res.status(400).json({ error: "Invalid params" });
+	}
+	//creo un nuovo oggetto post
+	const newPost = {
+		id: id,
+		title: req.body.title,
+		content: req.body.content,
+		img: req.body.img,
+		tags: req.body.tags,
+	};
+	//aggiungo il nuovo post alla lista dei post
+	posts.push(newPost);
+	//diamo una risposta con la lista dei post aggiornata
+	res.status(201).json(posts);
 }
 
-//update
+//update => modifica totale di un post
 function update(req, res) {
-	const id = req.params.id;
-	res.json(`Modifica totale del post con id n. ${id}`);
+	const { title, content, img, tags } = req.body;
+	//recuperiamo l'id dall'URL e lo trasformiamo in un numero
+	const id = parseInt(req.params.id);
+	//cerchiamo il post con quell'id nella lista dei post
+	const post = posts.find((post) => post.id === id);
+
+	//facciamo un controllo se non trovo nessun post con quell'id
+	if (!post) {
+		//ritorno uno status 404 e un messaggio di errore
+		return res.status(404).json({
+			error: "Not Found",
+			message: "Post non trovato",
+		});
+	}
+	//controllo i parametri in entrata dal body
+	if (!title || !content || !img || !tags?.length) {
+		return res.status(400).json({ error: "Invalid params" });
+	}
+
+	post.title = req.body.title;
+	post.content = req.body.content;
+	post.img = req.body.img;
+	post.tags = req.body.tags;
+
+	//diamo in risposta il post trovato
+	res.json(post);
 }
 
-//modify
+//modify => modifica parziale di un post
 function modify(req, res) {
-	const id = req.params.id;
-	res.json(`Modifca parziale del post con id n. ${id}`);
+	//recuperiamo l'id dall'URL e lo trasformiamo in un numero
+	const id = parseInt(req.params.id);
+	//cerchiamo il post con quell'id nella lista dei post
+	const post = posts.find((post) => post.id === id);
+
+	//facciamo un controllo se non trovo nessun post con quell'id
+	if (!post) {
+		//ritorno uno status 404 e un messaggio di errore
+		return res.status(404).json({
+			error: "Not Found",
+			message: "Post non trovato",
+		});
+	}
+
+	post.title = req.body.title;
+
+	//diamo in risposta il post trovato
+	res.json(post);
 }
 
-//destroy
+//destroy => cancellazione di un post
 function destroy(req, res) {
 	//recuperiamo l'id dall'URL e lo trasformiamo in un numero
 	const id = parseInt(req.params.id);
@@ -74,4 +133,5 @@ function destroy(req, res) {
 	res.sendStatus(204);
 }
 
+//esporto le funzioni
 module.exports = { index, show, store, update, modify, destroy };

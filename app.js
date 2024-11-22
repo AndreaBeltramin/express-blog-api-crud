@@ -6,6 +6,8 @@ const port = 3000;
 // visualizzare le immagini associate ad ogni post
 app.use(express.static("public"));
 
+app.use(express.json());
+
 const postsRouter = require("./routers/posts");
 app.use("/posts", postsRouter);
 
