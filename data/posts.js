@@ -1,6 +1,6 @@
 //creo un array dove inserisco una lista di almeno 5 post, per ognuno indico titolo,
 //contenuto, immagine e tags sotto forma di array di stringhe
-const blogPosts = [
+const posts = [
 	{
 		id: 1,
 		title: "ciambellone",
@@ -38,4 +38,4 @@ const blogPosts = [
 	},
 ];
 
-module.exports = blogPosts;
+module.exports = posts;
