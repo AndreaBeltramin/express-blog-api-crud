@@ -9,12 +9,15 @@ app.use(express.static("public"));
 app.use(express.json());
 
 const postsRouter = require("./routers/posts");
+const notFound = require("./middlewares/notFound");
 app.use("/posts", postsRouter);
 
 // creo il progetto base con una rotta / che ritorna un testo
 app.get("/", (req, res) => {
 	res.send("<h1>Server del mio blog</h1>");
 });
+
+app.use(notFound);
 
 app.listen(port, () => {
 	console.log("example app listening on port " + port);
