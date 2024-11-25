@@ -1,15 +1,19 @@
+//! CONFIG EXPRESS
 const express = require("express");
 const app = express();
 const port = 3000;
 
+//! REGISTERING MIDDLEWARES
+const errorsHandler = require("./middlewares/errorsHandler");
+const notFound = require("./middlewares/notFound");
+
 // configuro gli asset statici sull'applicazione in modo che si possano
 // visualizzare le immagini associate ad ogni post
 app.use(express.static("public"));
-
 app.use(express.json());
 
+//! REGISTERING ROUTES
 const postsRouter = require("./routers/posts");
-const notFound = require("./middlewares/notFound");
 app.use("/posts", postsRouter);
 
 // creo il progetto base con una rotta / che ritorna un testo
@@ -17,8 +21,11 @@ app.get("/", (req, res) => {
 	res.send("<h1>Server del mio blog</h1>");
 });
 
+//! MIDDLEWARE ERROR
+app.use(errorsHandler);
 app.use(notFound);
 
+//! START LISTENING
 app.listen(port, () => {
-	console.log("example app listening on port " + port);
+	console.log("Example app listening on port " + port);
 });

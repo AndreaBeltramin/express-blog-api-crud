@@ -4,7 +4,7 @@ const posts = require("../data/posts");
 //index => mostra la lista intera dei post
 function index(req, res) {
 	//dichiariamo la lista dei post filtrata = alla lista dei post originale
-	let filteredPosts = posts;
+	let filteredPosts = [...posts];
 	//se la richiesta contiene un tag come parametro
 	if (req.query.tag) {
 		//allora filtriamo la lista dei post
@@ -24,11 +24,16 @@ function show(req, res) {
 
 	//facciamo un controllo se non trovo nessun post con quell'id
 	if (!post) {
+		const err = new Error("Id post not found");
+		err.code = 404;
+		throw err;
+		/*
 		//ritorno uno status 404 e un messaggio di errore
 		return res.status(404).json({
 			error: "Not Found",
 			message: "Post non trovato",
 		});
+		*/
 	}
 	//diamo in risposta il post trovato
 	res.json(post);
@@ -41,7 +46,10 @@ function store(req, res) {
 	const id = posts[posts.length - 1].id + 1;
 	//controllo i parametri in entrata dal body
 	if (!title || !content || !img || !tags?.length) {
-		return res.status(400).json({ error: "Invalid params" });
+		const err = new Error("Invalid params");
+		err.code = 400;
+		throw err;
+		//return res.status(400).json({ error: "Invalid params" });
 	}
 	//creo un nuovo oggetto post
 	const newPost = {
@@ -67,15 +75,22 @@ function update(req, res) {
 
 	//facciamo un controllo se non trovo nessun post con quell'id
 	if (!post) {
+		const err = new Error("Id post not found");
+		err.code = 404;
+		throw err;
+		/*
 		//ritorno uno status 404 e un messaggio di errore
 		return res.status(404).json({
 			error: "Not Found",
 			message: "Post non trovato",
-		});
+		});*/
 	}
 	//controllo i parametri in entrata dal body
 	if (!title || !content || !img || !tags?.length) {
-		return res.status(400).json({ error: "Invalid params" });
+		const err = new Error("Invalid params");
+		err.code = 400;
+		throw err;
+		//return res.status(400).json({ error: "Invalid params" });
 	}
 
 	post.title = req.body.title;
@@ -96,11 +111,15 @@ function modify(req, res) {
 
 	//facciamo un controllo se non trovo nessun post con quell'id
 	if (!post) {
+		const err = new Error("Id post not found");
+		err.code = 404;
+		throw err;
+		/*
 		//ritorno uno status 404 e un messaggio di errore
 		return res.status(404).json({
 			error: "Not Found",
 			message: "Post non trovato",
-		});
+		});*/
 	}
 
 	post.title = req.body.title;
@@ -118,11 +137,15 @@ function destroy(req, res) {
 
 	//facciamo un controllo se non trovo nessun post con quell'id
 	if (!post) {
+		const err = new Error("Id post not found");
+		err.code = 404;
+		throw err;
+		/*
 		//ritorno uno status 404 e un messaggio di errore
 		return res.status(404).json({
 			error: "Not Found",
 			message: "Post non trovato",
-		});
+		});*/
 	}
 
 	//rimuoviamo il post con quell'id dalla lista dei post
