@@ -93,10 +93,10 @@ function update(req, res) {
 		//return res.status(400).json({ error: "Invalid params" });
 	}
 
-	post.title = req.body.title;
-	post.content = req.body.content;
-	post.img = req.body.img;
-	post.tags = req.body.tags;
+	post.title = title;
+	post.content = content;
+	post.img = img;
+	post.tags = tags;
 
 	//diamo in risposta il post trovato
 	res.json(post);
