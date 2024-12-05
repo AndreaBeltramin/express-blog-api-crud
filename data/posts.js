@@ -10,7 +10,6 @@ const posts = [
 		img: `${urlImg}/images/ciambellone.jpeg`,
 		tags: ["cucina", "dolce", "dessert"],
 		category: "dessert",
-		published: true,
 	},
 	{
 		id: 2,
@@ -19,7 +18,6 @@ const posts = [
 		img: `${urlImg}/images/cracker_barbabietola.jpeg`,
 		tags: ["cucina", "antipasto"],
 		category: "panificati",
-		published: true,
 	},
 	{
 		id: 3,
@@ -28,7 +26,6 @@ const posts = [
 		img: `${urlImg}/images/pane_fritto_dolce.jpeg`,
 		tags: ["cucina", "panificazione", "dolce"],
 		category: "dessert",
-		published: true,
 	},
 	{
 		id: 4,
@@ -37,7 +34,6 @@ const posts = [
 		img: `${urlImg}/images/pasta_barbabietola.jpeg`,
 		tags: ["cucina", "pasta", "primo"],
 		category: "primo piatto",
-		published: true,
 	},
 	{
 		id: 5,
@@ -46,7 +42,6 @@ const posts = [
 		img: `${urlImg}/images/torta_paesana.jpeg`,
 		tags: ["cucina", "dolce", "dessert"],
 		category: "dessert",
-		published: true,
 	},
 ];
 
