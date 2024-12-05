@@ -1,5 +1,6 @@
 //! CONFIG EXPRESS
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 3000;
 
@@ -11,6 +12,7 @@ const notFound = require("./middlewares/notFound");
 // visualizzare le immagini associate ad ogni post
 app.use(express.static("public"));
 app.use(express.json());
+app.use(cors());
 
 //! REGISTERING ROUTES
 const postsRouter = require("./routers/posts");
